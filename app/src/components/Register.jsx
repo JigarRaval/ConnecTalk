@@ -51,14 +51,14 @@ const Register = () => {
   return (
     <div className="register-container flex h-screen p-20 justify-center items-center ">
       <Helmet>
-        <title>BuzzTalk - Register</title>
+        <title>ChatNest - Register</title>
       </Helmet>
-      
+
       <form
         onSubmit={handleSubmit}
         className=" register-form border-2 p-8 max-w-96 w-full text-center rounded-2xl   "
       >
-        <h1 className="app-header">BuzzTalk</h1>
+        <h1 className="app-header">ChatNest</h1>
         <h2 className="border-b-2 pb-4 text-4xl font-bold ">Register</h2>
         <div className="form-group">
           <label htmlFor="username">Username:</label>

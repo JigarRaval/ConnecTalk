@@ -140,15 +140,12 @@ export default function Home() {
   return (
     <div className="home-container flex w-screen   ">
       <Helmet>
-        <title>BuzzTalk - chat</title>
+        <title>ChatNest - chat</title>
       </Helmet>
       <div className="sidebar  w-1/3 lg:w-1/6  lg:px-10 min-h-screen  border-r-2 pt-5 ">
         <div className="profile-section flex flex-col  w-full mb-5 ">
           <div className="info flex mb-4 items-center lg:mb-5 justify-center ">
-            <img
-              src={`${url}/${image}`}
-              className="profile-image"
-            ></img>
+            <img src={`${url}/${image}`} className="profile-image"></img>
             <span className="username font-bold text-2xl ">{username}</span>
           </div>
           <button
@@ -182,7 +179,7 @@ export default function Home() {
             src="src/assets/vecteezy_3d-rendering-of-speech-bubble-icons-3d-pastel-chat-icon_29108221.png"
             alt=""
           />
-          <h1 className=" ">BuzzTalk</h1>
+          <h1 className=" ">ChatNest</h1>
         </div>
       </div>
       <div className="content w-2/3 lg:w-5/6    ">
