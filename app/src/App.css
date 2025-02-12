@@ -55,6 +55,12 @@
       height: 100vh;
       overflow-y: auto;
     }
+    .logo{
+        background-image: url(../src/assets/vecteezy_3d-rendering-of-speech-bubble-icons-3d-pastel-chat-icon_29108221.png);
+  background-size:     cover;                     
+   background-repeat:   no-repeat;
+   background-position: center center; 
+    }
     
     .content {
       flex: 1;
@@ -154,6 +160,10 @@
       text-shadow: 0px 10px  8px  var(--dark)
     }
     .img {
+       background-image: url(../src/assets/vecteezy_3d-transparent-icon-of-people_46454918.png);
+  background-size:     cover;                     
+   background-repeat:   no-repeat;
+   background-position: center center; 
  filter: drop-shadow(2px 2px 4px var(--light));
 }
     .logout-button{

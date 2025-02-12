@@ -174,11 +174,8 @@ export default function Home() {
             ))}
         </ul>
         <div className="app-header fixed bottom-0 flex  justify-center items-center h-10 w-">
-          <img
-            className="w-10 h-10"
-            src="src/assets/vecteezy_3d-rendering-of-speech-bubble-icons-3d-pastel-chat-icon_29108221.png"
-            alt=""
-          />
+          <div className="w-10 h-10 logo"></div>
+
           <h1 className=" ">ConnecTalk </h1>
         </div>
       </div>
@@ -249,12 +246,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="no-chat flex  flex-col h-screen justify-center items-center ml-3 lg:ml-0">
-            <div className="img w-60 lg:w-80 h-60 lg:h-80 ">
-              <img
-                src="src/assets/vecteezy_3d-transparent-icon-of-people_46454918.png"
-                alt=""
-              />
-            </div>
+            <div className="img w-60 lg:w-80 h-60 lg:h-80 "></div>
             <p>Hey there! Start chatting with your friends now!</p>
           </div>
         )}
