@@ -140,7 +140,7 @@ export default function Home() {
   return (
     <div className="home-container flex w-screen   ">
       <Helmet>
-        <title>ChatNest - chat</title>
+        <title>Dialex - chat</title>
       </Helmet>
       <div className="sidebar  w-1/3 lg:w-1/6  lg:px-10 min-h-screen  border-r-2 pt-5 ">
         <div className="profile-section flex flex-col  w-full mb-5 ">
@@ -179,7 +179,7 @@ export default function Home() {
             src="src/assets/vecteezy_3d-rendering-of-speech-bubble-icons-3d-pastel-chat-icon_29108221.png"
             alt=""
           />
-          <h1 className=" ">ChatNest</h1>
+          <h1 className=" ">Dialex</h1>
         </div>
       </div>
       <div className="content w-2/3 lg:w-5/6    ">
