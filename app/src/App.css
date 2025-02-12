@@ -1,0 +1,269 @@
+@import "tailwindcss";
+:root{
+  --dark:#2E3840;
+  --red:#FF0303;
+  --blue:#4E6E81;
+  --light:#F9DBBB;
+}
+.home-container{
+ 
+  
+  font-size: medium;
+  font-weight: 600;
+  color: var(--light);
+}
+
+
+.sidebar{
+  background-color: rgb(9, 9, 15);
+  border-color: var(--blue);
+  box-shadow: 0 0px 5px 1px #497D74;
+  
+}
+.hr{
+  box-shadow:1px 1px 5px 1px #497D74;
+  border-color: var(--blue);
+}
+
+.user-item{
+  cursor: pointer;
+  border-bottom: 1px solid;
+  padding-bottom: 10px;
+  border-color: var(--blue);
+
+}
+.user-item:hover{
+  background-color: var(--blue);
+  color: var(--light);
+  
+}
+
+.user-username{
+  font-size: 1.2em;
+}
+.profile-image{
+  border: 2px solid var(--dark);
+  box-shadow:0px 0px 10px 1px #497D74;
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    
+    .content {
+      flex: 1;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    
+
+.content{
+  background-image: url(../src/assets/christoph-nolte-xDWBuZIQtGc-unsplash.jpg);
+  background-size:     cover;                     
+   background-repeat:   no-repeat;
+   background-position: center center; 
+}
+.profile{
+  background: black;
+  box-shadow:1px 1px 5px 1px #497D74;
+  border-color: var(--blue);
+  font-size: larger;
+}
+.messages{
+  flex: 1;
+  
+}
+
+.messages::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  display: none; 
+}
+
+.messages,
+.sidebar {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+
+
+.message p{
+  border-radius: 15px;
+  word-wrap:break-word;
+}
+.message.sent{
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.message.sent p{
+  background-color: var(--dark);
+  color:var(--light);
+  border-top-right-radius:0
+}
+.message.received{
+  align-self:flex-start
+}
+.message.received p{
+  background-color: var(--light);
+  color: var(--dark);
+  border-top-left-radius:0
+}
+
+    .timestamp{
+      font-size: 0.75em;
+      color:#888;
+      margin:5px
+    }
+    .message-input{
+      box-shadow: 0px 0px 1px 1px var(--blue);
+    } 
+    .message-input input{
+      padding:10px;
+      border-radius: 10px;
+      border:1px solid var(--dark);
+      outline:none;
+      
+    }
+    
+    .message-input input:focus{
+      box-shadow: 0 0 8px 1px var(--light);
+      
+    }
+    
+    .message-input button{
+      padding:7px;
+      border: 1px solid var(--light);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .message-input button:hover{
+      box-shadow: 0 0 8px 1px var(--light);
+
+    }
+    
+    .no-chat{
+      backdrop-filter: blur(5px);
+      font-size: 1.2em;
+      color:var(--light);
+      text-shadow: 0px 10px  8px  var(--dark)
+    }
+    .img {
+ filter: drop-shadow(2px 2px 4px var(--light));
+}
+    .logout-button{
+      background-color: #dc3545;
+      color:#fff;
+      cursor: pointer;
+      
+    }
+    .logout-button:hover{
+      background-color: #c82333;
+    }
+    
+   
+  /* Register.css */
+.app-header {
+  font-family: "pacifico",cursive;
+  color: var(--blue);
+  margin-bottom: 10px;
+    padding: 5px;
+    text-shadow: 2px 2px 4px var(--dark);
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+  
+  .register-container {
+    background-image: url(../src/assets/christoph-nolte-xDWBuZIQtGc-unsplash.jpg);
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+    color: var(--light);
+    
+  }
+  
+  .register-form {
+    box-shadow: 0 0px 10px 2px #497D74;
+    color: var(--blue);
+    backdrop-filter: blur(5px);
+    border-color: var(--blue);
+    
+    
+  }
+  
+  
+  .register-form h2 {
+    margin-bottom: 20px;
+    border-color: var(--dark);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    color: var(--blue);
+    margin-bottom: 8px;
+    font-weight: 800;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="password"],
+  .form-group input[type="file"] {
+    outline-style: none;
+    box-shadow: 2px 2px  var(--dark);
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--dark);
+    color: var(--light);
+    border-radius: 4px;
+    font-size: 18px;
+    box-sizing: border-box;
+  }
+  .form-group input[type="file"]:hover {
+  outline-style: none;
+  color: var(--red);
+  background-color: var(--dark);
+  border: 1px solid var(--blue);
+  box-shadow: 2px 2px  var(--blue);
+  
+  }
+  
+  .register-button {
+    background-color: var(--dark); 
+    color: var(--light);
+    border-radius: 4px;
+    box-shadow: 3px 3px 4px var(--blue);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: var(--dark);
+    color: var(--light);
+    transform: scale(1.05); 
+  }
+  .login-btn:hover {
+    color: var(--dark);
+    transform: scale(1.05); 
+  }
+  .login-btn {
+   color: var(--light);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: underline;
+  }
+  
+  .register-button:focus {
+    outline: none;
+  }
