@@ -8,16 +8,14 @@ import { PrivateRoute } from './components/PrivateRoute';
 const App = () => {
   // const token = localStorage.getItem("token");
   return (
-    <Router>
-      <Routes>
-        {/* <Route path="/" element={!token ? <Navigate to="/register" /> : <Navigate to="/home" />} /> */}
-        <Route path="/" element={<Register/>} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/home" element={<PrivateRoute element={<Home />} />}/>
-      </Routes>
-    </Router>
-  )
+    <Routes>
+      {/* <Route path="/" element={!token ? <Navigate to="/register" /> : <Navigate to="/home" />} /> */}
+      <Route path="/" element={<Register />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+    </Routes>
+  );
 }
 
 export default App
