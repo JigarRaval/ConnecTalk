@@ -9,13 +9,15 @@ const Message = require("../models/Message");
 const fs = require("fs");
 require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET;
-const host = process.env.HOST;
+const backend = process.env.BACKEND;
 
 router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const imageUrl = req.file ? `${host}/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file
+      ? `${backend}/uploads/${req.file.filename}`
+      : null;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       if (req.file) {
