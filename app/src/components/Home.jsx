@@ -145,7 +145,7 @@ export default function Home() {
       <div className="sidebar  w-1/3 lg:w-1/6  lg:px-10 min-h-screen  border-r-2 pt-5 ">
         <div className="profile-section flex flex-col  w-full mb-5 ">
           <div className="info flex mb-4 items-center lg:mb-5 justify-center ">
-            <img src={`${url}/${image}`} className="profile-image"></img>
+            <img src={{ image }} className="profile-image"></img>
             <span className="username font-bold text-2xl ">{username}</span>
           </div>
           <button
@@ -166,7 +166,7 @@ export default function Home() {
                 onClick={() => setSelectedUser(user)}
               >
                 <img
-                  src={`${url}/${user.image}`}
+                  src={user.image}
                   className="user-image w-10 h-10 rounded-3xl mr-3"
                 ></img>
                 <span className="user-username">{user.username}</span>
@@ -183,10 +183,7 @@ export default function Home() {
         {selectedUser ? (
           <div className="chat-container flex flex-col h-screen relative ">
             <div className="profile-section profile border-b-2 flex items-center mb-0  p-4 h-18 sticky top-0 ">
-              <img
-                src={`${url}/${selectedUser.image}`}
-                className="profile-image"
-              ></img>
+              <img src={selectedUser.image} className="profile-image"></img>
               <span className="username">{selectedUser.username}</span>
             </div>
             <div
@@ -209,9 +206,7 @@ export default function Home() {
                   >
                     <img
                       className="w-8 h-8 rounded-2xl mx-3"
-                      src={`${url}/${
-                        msg.from === userId ? image : selectedUser.image
-                      }`}
+                      src={msg.from === userId ? image : selectedUser.image}
                     ></img>
                     <p className="p-3">{msg.content}</p>
                     <div className="timestamp">

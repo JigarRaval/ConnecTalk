@@ -35,7 +35,7 @@ mongoose
   .then()
   .catch((err) => console.log(err));
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
