@@ -145,7 +145,7 @@ export default function Home() {
       <div className="sidebar  w-1/3 lg:w-1/6  lg:px-10 min-h-screen  border-r-2 pt-5 ">
         <div className="profile-section flex flex-col  w-full mb-5 ">
           <div className="info flex mb-4 items-center lg:mb-5 justify-center ">
-            <img src={{ image }} className="profile-image"></img>
+            <img src={image} className="profile-image"></img>
             <span className="username font-bold text-2xl ">{username}</span>
           </div>
           <button
