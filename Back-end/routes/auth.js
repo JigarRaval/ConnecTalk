@@ -12,7 +12,7 @@ const JWT_SECRET =process.env.JWT_SECRET;
 
 router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password } = req.body;
-  const image = req.file ? req.file.path : null;
+  const image = req.file.path;
 
   try {
     const existingUser = await User.findOne({ username });
