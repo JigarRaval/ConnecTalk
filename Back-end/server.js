@@ -34,7 +34,10 @@ mongoose
   })
   .then()
   .catch((err) => console.log(err));
-
+app.use(express.static(path.join(__dirnamr, "dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
