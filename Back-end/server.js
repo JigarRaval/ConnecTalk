@@ -12,6 +12,10 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const host = process.env.HOST;
 const mongoDB = process.env.MONGODB;
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -32,7 +36,7 @@ mongoose
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set("io", io);
 
 io.on("connection", (socket) => {

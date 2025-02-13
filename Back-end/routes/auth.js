@@ -8,22 +8,27 @@ const authenticate = require("../middleware/authentication");
 const Message = require("../models/Message");
 const fs = require("fs");
 require("dotenv").config();
-const JWT_SECRET =process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
+const host = process.env.HOST;
 
 router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password } = req.body;
-  const image = req.file.path;
 
   try {
+    const imageUrl = req.file ? `${host}/uploads/${req.file.filename}` : null;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      if (image) {
-        fs.unlinkSync(image);
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
       }
       return res.status(400).json({ message: "Username already taken" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword, image });
+    const user = new User({
+      username,
+      password: hashedPassword,
+      image: imageUrl,
+    });
     await user.save();
 
     res.status(201).json({ message: "User registered successfully" });
