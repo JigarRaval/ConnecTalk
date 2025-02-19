@@ -15,9 +15,11 @@ router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const imageUrl = req.file
-      ? `${backend}/uploads/${req.file.filename}`
-      : null;
+    // const imageUrl = req.file
+    //   ? `${backend}/uploads/${req.file.filename}`
+    //   : null;
+    const imageUrl = req.file ? req.file.path : null;
+
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       if (req.file) {
