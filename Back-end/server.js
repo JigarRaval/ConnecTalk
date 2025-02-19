@@ -4,8 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const http = require("http");
 const socketIo = require("socket.io");
-// const fs = require("fs");
-// const path = require("path");
 const Message = require("./models/Message");
 const authRoutes = require("./routes/auth");
 const app = express();
@@ -14,10 +12,6 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const host = process.env.HOST;
 const mongoDB = process.env.MONGODB;
-// const uploadsDir = path.join(__dirname, "uploads");
-// if (!fs.existsSync(uploadsDir)) {
-//   fs.mkdirSync(uploadsDir, { recursive: true });
-// }
 
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -38,7 +32,6 @@ mongoose
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set("io", io);
 
 io.on("connection", (socket) => {

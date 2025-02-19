@@ -35,7 +35,7 @@ const Register = () => {
     data.append("image", formData.image);
 
     try {
-      const res = await axios.post(`${url}/api/auth/register`, data);
+      await axios.post(`${url}/api/auth/register`, data);
       navigate("/login");
     } catch (err) {
       if (err.response && err.response.status === 400) {
