@@ -38,7 +38,7 @@ import { Helmet } from 'react-helmet'
          "❌ Login failed:",
          err.response ? err.response.data : err
        );
-       toast.warn("🦄 Wow so easy!", {
+       toast.warn(err.response?.data?.message || "Login failed", {
          position: "top-center",
          autoClose: 5000,
          hideProgressBar: false,
