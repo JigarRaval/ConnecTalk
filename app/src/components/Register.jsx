@@ -5,6 +5,7 @@ import axios from "axios";
 const url = import.meta.env.VITE_URL;
 const Register = () => {
   const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     username: "",
     password: "",
