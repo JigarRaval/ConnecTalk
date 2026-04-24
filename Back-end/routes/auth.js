@@ -108,8 +108,7 @@ router.post(
       if (!req.file) {
         return res.status(400).json({ message: "No voice file uploaded" });
       }
-      // For local storage, req.file.filename is the saved filename
-      const voiceUrl = req.file.filename;
+      const voiceUrl = req.file.path; // ✅ full Cloudinary URL
       res.json({ voiceUrl, fileType: req.file.mimetype });
     } catch (err) {
       console.error("Voice upload error:", err);
@@ -118,7 +117,6 @@ router.post(
   }
 );
 
-// Upload general file (image, document, video)
 router.post(
   "/upload-file",
   authenticate,
@@ -128,8 +126,7 @@ router.post(
       if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
       }
-      // For local storage, return the filename
-      const fileUrl = req.file.filename;
+      const fileUrl = req.file.path; // ✅ full Cloudinary URL
       const fileType = req.file.mimetype;
       res.json({ fileUrl, fileType, originalName: req.file.originalname });
     } catch (err) {

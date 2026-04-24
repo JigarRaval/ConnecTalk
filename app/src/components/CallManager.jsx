@@ -489,6 +489,7 @@ const CallManager = ({
   const peerConnectionRef = useRef(null);
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
+  const remoteAudioRef = useRef(null);
   const initiatorRef = useRef(false);
   const pendingSignalRef = useRef(null);
   const audioRef = useRef(null);
@@ -564,22 +565,43 @@ const CallManager = ({
     }
     if (localVideoRef.current) localVideoRef.current.srcObject = null;
     if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
+    if (remoteAudioRef.current) remoteAudioRef.current.srcObject = null;
   };
 
   const initLocalStream = async () => {
     releaseAllResources();
     await new Promise((resolve) => setTimeout(resolve, 200));
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: isVideoCall,
+      const constraints = {
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+        video: isVideoCall ? {
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: "user"
+        } : false,
+      };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      
+      // Ensure all tracks are enabled
+      stream.getTracks().forEach(track => {
+        track.enabled = true;
+        console.log(`Track enabled: ${track.kind}`, track);
       });
+      
       setLocalStream(stream);
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+        localVideoRef.current.muted = true; // Prevent feedback
+      }
+      console.log("Local stream initialized:", stream.getTracks());
       return stream;
     } catch (error) {
       console.error("Media access error:", error);
-      toast.error("Could not access camera/microphone");
+      toast.error("Could not access camera/microphone. Please check permissions.");
       return null;
     }
   };
@@ -588,15 +610,38 @@ const CallManager = ({
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnectionRef.current = peerConnection;
 
+    console.log("Adding local tracks to peer connection:", stream.getTracks());
     stream
       .getTracks()
-      .forEach((track) => peerConnection.addTrack(track, stream));
+      .forEach((track) => {
+        console.log(`Adding track: ${track.kind}`, track);
+        peerConnection.addTrack(track, stream);
+      });
 
     peerConnection.ontrack = (event) => {
+      console.log("Received remote track:", event.track.kind);
       const [nextRemoteStream] = event.streams;
       setRemoteStream(nextRemoteStream);
-      if (remoteVideoRef.current)
+      
+      if (remoteVideoRef.current && event.track.kind === 'video') {
         remoteVideoRef.current.srcObject = nextRemoteStream;
+        console.log("Set remote video stream");
+      }
+      
+      if (remoteAudioRef.current && event.track.kind === 'audio') {
+        remoteAudioRef.current.srcObject = nextRemoteStream;
+        remoteAudioRef.current.play().catch(e => console.log("Audio play error:", e));
+        console.log("Set remote audio stream");
+      }
+      
+      // Also set both elements for video calls (video elements can play audio)
+      if (isVideoCall && remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = nextRemoteStream;
+      }
+      if (remoteAudioRef.current) {
+        remoteAudioRef.current.srcObject = nextRemoteStream;
+        remoteAudioRef.current.play().catch(e => console.log("Audio play error:", e));
+      }
     };
 
     peerConnection.onicecandidate = (event) => {
@@ -843,15 +888,37 @@ const CallManager = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/90 backdrop-blur-md animate-fade-in">
       <div className="relative h-full max-h-[80vh] w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(160deg,#181512,#221d18)] shadow-2xl">
         {isVideoCall && (
-          <video
-            ref={remoteVideoRef}
-            autoPlay
-            playsInline
-            className="h-full w-full object-cover"
-          />
+          <>
+            <video
+              ref={remoteVideoRef}
+              autoPlay
+              playsInline
+              className="h-full w-full object-cover"
+              onPlay={() => console.log("Remote video playing")}
+              onError={(e) => console.error("Remote video error:", e)}
+            />
+            <audio
+              ref={remoteAudioRef}
+              autoPlay
+              playsInline
+              muted={false}
+              className="hidden"
+              onPlay={() => console.log("Remote audio playing")}
+              onError={(e) => console.error("Remote audio error:", e)}
+            />
+          </>
         )}
         {!isVideoCall && (
           <div className="flex h-full w-full flex-col items-center justify-center bg-[linear-gradient(160deg,#1c1917,#292524)]">
+            <audio
+              ref={remoteAudioRef}
+              autoPlay
+              playsInline
+              muted={false}
+              className="hidden"
+              onPlay={() => console.log("Remote audio playing")}
+              onError={(e) => console.error("Remote audio error:", e)}
+            />
             <div className="flex h-32 w-32 items-center justify-center rounded-full bg-stone-800 text-5xl shadow-inner">
               <FaPhoneAlt className="text-amber-400" />
             </div>

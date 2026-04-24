@@ -493,7 +493,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const http = require("http");
 const socketIo = require("socket.io");
-const path = require("path"); // <-- added missing import
+const path = require("path");
 const Message = require("./models/Message");
 const User = require("./models/User");
 const Group = require("./models/Group");
@@ -507,18 +507,20 @@ const pinnedRoutes = require("./routes/pinnedMessages");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
+// Read the frontend URL from environment, fallback for local development
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
-// Initialize express app FIRST
+console.log(`✅ CORS allowed origin: ${FRONTEND_URL}`);
+
 const app = express();
 
-// Configure CORS for Express
+// Configure CORS for Express – allow the specific frontend origin
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 
 // Body parser middleware
 app.use(bodyParser.json());
 
-// Static files (if still using local uploads)
+// Static files (if still using local uploads – you can remove if using Cloudinary)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API routes
@@ -528,10 +530,10 @@ app.use("/api/status", statusRoutes);
 app.use("/api/call-logs", callLogRoutes);
 app.use("/api/pinned", pinnedRoutes);
 
-// Create HTTP server AFTER app is defined
+// Create HTTP server
 const server = http.createServer(app);
 
-// Configure Socket.io with explicit origin
+// Configure Socket.io with the same frontend origin
 const io = socketIo(server, {
   cors: {
     origin: FRONTEND_URL,
@@ -974,5 +976,6 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`✅ Frontend allowed origin: ${FRONTEND_URL}`);
+  console.log(`✅ CORS allowed origin: ${FRONTEND_URL}`);
+  console.log(`✅ Socket.io allowed origin: ${FRONTEND_URL}`);
 });
