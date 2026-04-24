@@ -507,15 +507,31 @@ const pinnedRoutes = require("./routes/pinnedMessages");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
-// Read the frontend URL from environment, fallback for local development
+// Allow multiple origins for development and production
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const NETLIFY_URL = "https://connectalk.netlify.app";
 
-console.log(`✅ CORS allowed origin: ${FRONTEND_URL}`);
+const allowedOrigins = [FRONTEND_URL, NETLIFY_URL, "http://localhost:5173", "http://localhost:5174", "http://localhost:5175"];
+
+console.log(`✅ CORS allowed origins:`, allowedOrigins);
 
 const app = express();
 
-// Configure CORS for Express – allow the specific frontend origin
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+// Configure CORS for Express – allow multiple origins
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log(`❌ CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -533,10 +549,20 @@ app.use("/api/pinned", pinnedRoutes);
 // Create HTTP server
 const server = http.createServer(app);
 
-// Configure Socket.io with the same frontend origin
+// Configure Socket.io with the same frontend origins
 const io = socketIo(server, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: function (origin, callback) {
+      // Allow requests with no origin
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log(`❌ Socket.io CORS blocked origin: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "DELETE"],
     credentials: true,
   },
