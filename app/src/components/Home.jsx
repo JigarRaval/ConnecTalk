@@ -1010,9 +1010,6 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
-                Fast, private, and distraction-free conversation.
-              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
